@@ -8,8 +8,8 @@ NOT_ENTITY_MARK = 'O'
 FORBIDDEN_FILES = ['list']
 SEPARATOR = ' '
 
-TOKEN_PATTERN = '\w+|[\d\.]+|[!@#$%^&*(),.?":{}|<>\'"]+|/'
-TAG_MAPPING = {'LOC': 'Loc', 'PER': 'Person', 'MEDIA': 'Org', 'GEOPOLIT': 'LocOrg', 'ORG': 'Org'}
+TOKEN_PATTERN = '\w+|[\d]+|[!@#$%^&*().?":{}|<>\'"/]'
+TAG_MAPPING = {'LOC': 'Location', 'PER': 'Person', 'MEDIA': 'Org', 'GEOPOLIT': 'LocOrg', 'ORG': 'Org'}
 
 def read_lines(filename):
     with open(filename) as f:
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # Get unique input file names without extensions
     output_lines = []
     tags = set()
-    for folder in INPUT_FOLDERS:
+    for folder in sorted(INPUT_FOLDERS):
         input_files = set()
         for r, d, f in os.walk(folder):
             for file in f:
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         #print(input_files)
 
         
-        for input_file_name in input_files:
+        for input_file_name in sorted(input_files):
             # Read text
             text_file_name = f'{folder}/{input_file_name}.txt'
             text = read(text_file_name, line_sep = '  ')
